@@ -46,7 +46,7 @@ module "label" {
 //}
 
 resource "aws_elasticache_parameter_group" "default" {
-  count     = "${var.enabled == "true" ? 1 : 0}"
+  count     = "${var.enabled == "true" && var.parameter_group_name == "" ? 1 : 0}"
   name      = "${module.label.id}"
   family    = "${var.family}"
   parameter = "${var.parameter}"
