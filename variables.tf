@@ -34,7 +34,13 @@ variable "subnets" {
   default     = []
 }
 
-variable "elasticache_subnet_group_name" {
+variable "subnet_group_name" {
+  type        = "string"
+  description = "Subnet group name for the ElastiCache instance"
+  default     = ""
+}
+
+variable "parameter_group_name" {
   type        = "string"
   description = "Subnet group name for the ElastiCache instance"
   default     = ""
@@ -82,7 +88,7 @@ variable "at_rest_encryption_enabled" {
 }
 
 variable "transit_encryption_enabled" {
-  default     = "true"
+  default     = "false"
   description = "Enable TLS"
 }
 
@@ -142,6 +148,13 @@ variable "delimiter" {
 }
 
 variable "attributes" {
+  type        = "list"
+  description = "Additional attributes (_e.g._ \"1\")"
+  default     = []
+}
+
+variable "security_group_id"
+{
   type        = "list"
   description = "Additional attributes (_e.g._ \"1\")"
   default     = []
