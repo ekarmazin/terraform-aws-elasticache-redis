@@ -55,14 +55,13 @@ resource "aws_elasticache_parameter_group" "default" {
 resource "aws_elasticache_replication_group" "default" {
   count = "${var.enabled == "true" ? 1 : 0}"
 
-  auth_token                    = "${var.auth_token}"
   replication_group_id          = "${var.replication_group_id == "" ? module.label.id : var.replication_group_id}"
   replication_group_description = "${module.label.id}"
   node_type                     = "${var.instance_type}"
   number_cache_clusters         = "${var.cluster_size}"
   port                          = "${var.port}"
   parameter_group_name          = "${aws_elasticache_parameter_group.default.name}"
-  availability_zones            = ["${slice(var.availability_zones, 0, var.cluster_size)}"]
+  availability_zones            = ["${slice(var.availability_zones, 0, length(var.availability_zones))}"]
   automatic_failover_enabled    = "${var.automatic_failover}"
   subnet_group_name             = "${local.elasticache_subnet_group_name}"
   security_group_ids            = ["${aws_security_group.default.id}"]
