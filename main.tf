@@ -64,7 +64,7 @@ resource "aws_elasticache_replication_group" "default" {
   availability_zones            = ["${slice(var.availability_zones, 0, length(var.availability_zones))}"]
   automatic_failover_enabled    = "${var.automatic_failover}"
   subnet_group_name             = "${var.subnet_group_name}"
-  security_group_ids            = ["${var.security_group_id}"]
+  security_group_ids            = ["${var.security_group_ids}"]
   maintenance_window            = "${var.maintenance_window}"
   notification_topic_arn        = "${var.notification_topic_arn}"
   engine_version                = "${var.engine_version}"

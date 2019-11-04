@@ -153,7 +153,7 @@ variable "attributes" {
   default     = []
 }
 
-variable "security_group_id"
+variable "security_group_ids"
 {
   type        = "list"
   description = "Additional attributes (_e.g._ \"1\")"
