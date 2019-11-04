@@ -10,41 +10,6 @@ module "label" {
   tags       = "${var.tags}"
 }
 
-//#
-//# Security Group Resources
-//#
-//resource "aws_security_group" "default" {
-//  count  = "${var.enabled == "true" ? 1 : 0}"
-//  vpc_id = "${var.vpc_id}"
-//  name   = "${module.label.id}"
-//
-//  ingress {
-//    from_port       = "${var.port}"              # Redis
-//    to_port         = "${var.port}"
-//    protocol        = "tcp"
-//    security_groups = ["${var.security_groups}"]
-//  }
-//
-//  egress {
-//    from_port   = 0
-//    to_port     = 0
-//    protocol    = "-1"
-//    cidr_blocks = ["0.0.0.0/0"]
-//  }
-//
-//  tags = "${module.label.tags}"
-//}
-
-//locals {
-//  elasticache_subnet_group_name = "${var.elasticache_subnet_group_name != "" ? var.elasticache_subnet_group_name : join("", aws_elasticache_subnet_group.default.*.name) }"
-//}
-
-//resource "aws_elasticache_subnet_group" "default" {
-//  count      = "${var.enabled == "true" && var.elasticache_subnet_group_name == "" && length(var.subnets) > 0 ? 1 : 0}"
-//  name       = "${module.label.id}"
-//  subnet_ids = ["${var.subnets}"]
-//}
-
 resource "aws_elasticache_parameter_group" "default" {
   count     = "${var.enabled == "true" && var.parameter_group_name == "" ? 1 : 0}"
   name      = "${module.label.id}"
@@ -123,14 +88,3 @@ resource "aws_cloudwatch_metric_alarm" "cache_memory" {
   ok_actions    = ["${var.ok_actions}"]
   depends_on    = ["aws_elasticache_replication_group.default"]
 }
-
-//module "dns" {
-//  source    = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.2.6"
-//  enabled   = "${var.enabled == "true" && length(var.zone_id) > 0 ? "true" : "false"}"
-//  namespace = "${var.namespace}"
-//  name      = "${var.name}"
-//  stage     = "${var.stage}"
-//  ttl       = 60
-//  zone_id   = "${var.zone_id}"
-//  records   = ["${aws_elasticache_replication_group.default.*.primary_endpoint_address}"]
-//}

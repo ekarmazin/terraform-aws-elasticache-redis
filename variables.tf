@@ -24,12 +24,6 @@ variable "security_groups" {
   description = "AWS security group ids"
 }
 
-variable "vpc_id" {
-  type        = "string"
-  default     = ""
-  description = "AWS VPC id"
-}
-
 variable "subnets" {
   type        = "list"
   description = "AWS subnet IDs"
@@ -138,10 +132,6 @@ variable "availability_zones" {
   default     = []
 }
 
-variable "zone_id" {
-  default     = ""
-  description = "Route53 DNS Zone id"
-}
 
 variable "delimiter" {
   type        = "string"
